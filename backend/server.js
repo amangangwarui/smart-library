@@ -8,41 +8,26 @@ connectDB();
 
 const app = express();
 
-/* =======================
-   CORS CONFIG (IMPORTANT)
-======================= */
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173", // local frontend
-      "https://smart-library-frontend-enbb.onrender.com", // render frontend
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+/* CORS*/
+app.use(cors({
+  origin: "https://smart-library-frontend-enbb.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+}));
 
-// handle preflight requests
 app.options("*", cors());
 
-/* =======================
-   MIDDLEWARES
-======================= */
 app.use(express.json());
 
-/* =======================
-   ROUTES
-======================= */
+/* ===== ROUTES ===== */
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/books", require("./routes/bookRoutes"));
 app.use("/api/borrow", require("./routes/borrowRoutes"));
 app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 app.use("/api/payment", require("./routes/paymentRoutes"));
 
-/* =======================
-   SERVER START
-======================= */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);
