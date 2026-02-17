@@ -6,11 +6,12 @@ const Borrow = require("../models/Borrow");
 router.get("/", protect, async (req, res) => {
   try {
     const borrows = await Borrow.find({
-      user: req.user.id,
+      user: req.user,      
       returned: false,
     }).populate("book");
 
     res.json(borrows);
+
   } catch (error) {
     res.status(500).json({ message: "Dashboard error" });
   }
