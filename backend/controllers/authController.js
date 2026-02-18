@@ -28,10 +28,10 @@ exports.signup = async (req, res) => {
       password: hash,
     });
 
-    res.status(201).json({ msg: "Signup successful" });
+    res.status(201).json({message : "Signup successful" });
 
   } catch (err) {
-    console.error("Signup Error:", err.message);
+    console.log("Signup Error:", err.message);
     res.status(500).json({ msg: "Server error" });
   }
 };
